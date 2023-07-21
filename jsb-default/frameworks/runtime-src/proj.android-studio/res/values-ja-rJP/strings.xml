@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name" translatable="false">私のクローゼット-服の並べ替えパズル</string>
+    <string name="facebook_app_id">333663604937509</string>
+    <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
+    <string name="default_notification_channel_name" translatable="true">私のクローゼット-服の並べ替えパズル</string>
+    <string name="fcm_message">FCM Message</string>
+    <string name="msg_token_fmt" translatable="false">====== InstanceID Token: %s</string>
+    <string name="admob_app_id">ca-app-pub-8225893138914109~4694875863</string>
+    <string translatable="false"  name="game_services_project_id">570781201899</string>
+</resources>

@@ -1,0 +1,213 @@
+import org.apache.tools.ant.taskdefs.condition.Os
+
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion PROP_COMPILE_SDK_VERSION.toInteger()
+    buildToolsVersion PROP_BUILD_TOOLS_VERSION
+
+    defaultConfig {
+        applicationId "com.sort.puzzle.dress"
+        minSdkVersion PROP_MIN_SDK_VERSION
+        targetSdkVersion PROP_TARGET_SDK_VERSION
+        multiDexEnabled true
+        versionCode 3
+        versionName "1.1.3"
+        ndk {
+            // ����֧�ֵ�SO��ܹ�
+//            abiFilters 'armeabi' //, 'x86', 'armeabi-v7a', 'x86_64', 'arm64-v8a'
+            abiFilters  'armeabi-v7a','arm64-v8a'
+        }
+
+//        configurations.all {
+//            resolutionStrategy {
+//                force 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8'
+//                // 显示冲突的依赖库版本信息
+//                failOnVersionConflict()
+//            }
+//        }
+
+        externalNativeBuild {
+            ndkBuild {
+                if (!project.hasProperty("PROP_NDK_MODE") || PROP_NDK_MODE.compareTo('none') != 0) {
+                    // skip the NDK Build step if PROP_NDK_MODE is none
+                    targets 'cocos2djs'
+                    arguments 'NDK_TOOLCHAIN_VERSION=clang'
+
+                    def module_paths = [project.file("../../../cocos2d-x"),
+                                        project.file("../../../cocos2d-x/cocos"),
+                                        project.file("../../../cocos2d-x/external")]
+                    if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+                        arguments 'NDK_MODULE_PATH=' + module_paths.join(";")
+                    }
+                    else {
+                        arguments 'NDK_MODULE_PATH=' + module_paths.join(':')
+                    }
+                    
+                    arguments '-j' + Runtime.runtime.availableProcessors()
+                    abiFilters.addAll(PROP_APP_ABI.split(':').collect{it as String})
+                }
+            }
+        }
+    }
+
+    sourceSets.main {
+        java.srcDirs "../src", "src"
+        res.srcDirs "../res", 'res'
+        jniLibs.srcDirs "../libs", 'libs'
+        manifest.srcFile "AndroidManifest.xml"
+    }
+
+    externalNativeBuild {
+        ndkBuild {
+            if (!project.hasProperty("PROP_NDK_MODE") || PROP_NDK_MODE.compareTo('none') != 0) {
+                // skip the NDK Build step if PROP_NDK_MODE is none
+                path "jni/Android.mk"
+            }
+        }
+    }
+
+    signingConfigs {
+
+       release {
+            if (project.hasProperty("RELEASE_STORE_FILE")) {
+                storeFile file(RELEASE_STORE_FILE)
+                storePassword RELEASE_STORE_PASSWORD
+                keyAlias RELEASE_KEY_ALIAS
+                keyPassword RELEASE_KEY_PASSWORD
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            debuggable false
+            jniDebuggable false
+            renderscriptDebuggable false
+            minifyEnabled true
+            zipAlignEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            if (project.hasProperty("RELEASE_STORE_FILE")) {
+                signingConfig signingConfigs.release
+            }
+
+            externalNativeBuild {
+                ndkBuild {
+                    arguments 'NDK_DEBUG=0'
+                }
+            }
+        }
+
+        debug {
+            debuggable true
+            jniDebuggable true
+            renderscriptDebuggable true
+            externalNativeBuild {
+                ndkBuild {
+                    arguments 'NDK_DEBUG=1'
+                }
+            }
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    lintOptions {
+        checkReleaseBuilds false
+    }
+
+    packagingOptions {
+//        exclude 'META-INF/com.android.tools/proguard/coroutines.pro'
+//        pickFirst  'META-INF/com.android.tools/proguard/coroutines.pro'// 匹配到多个相同文件，只提取第一个
+//        merge '**/com.android.tools/proguard/coroutines.pro' // 多余的合并
+    }
+}
+
+android.applicationVariants.all { variant ->
+    // delete previous files first
+    delete "${buildDir}/intermediates/merged_assets/${variant.dirName}"
+
+    variant.mergeAssets.doLast {
+        def sourceDir = "${buildDir}/../../../../.."
+
+        copy {
+            from "${sourceDir}/assets"
+            into "${outputDir}/assets"
+        }
+
+        copy {
+            from "${sourceDir}/src"
+            into "${outputDir}/src"
+        }
+
+        copy {
+            from "${sourceDir}/jsb-adapter"
+            into "${outputDir}/jsb-adapter"
+        }
+
+        copy {
+            from "${sourceDir}/main.js"
+            from "${sourceDir}/project.json"
+            into outputDir
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: '../libs', include: ['*.jar','*.aar'])
+    implementation fileTree(dir: 'libs', include: ['*.jar','*.aar'])
+    implementation fileTree(dir: "../../../cocos2d-x/cocos/platform/android/java/libs", include: ['*.jar'])
+    implementation project(':libcocos2dx')
+
+    implementation "com.android.billingclient:billing:5.0.0"
+
+    implementation 'androidx.browser:browser:1.0.0'
+//    implementation 'com.facebook.android:facebook-android-sdk:[5,6)'
+    implementation 'com.facebook.android:facebook-android-sdk:7.1.0'
+
+    implementation 'com.adjust.sdk:adjust-android:4.28.9'
+    implementation 'com.android.installreferrer:installreferrer:2.2'//adjust��Ҫ Ӧ�ð�װ��������Դ
+    implementation 'com.google.android.gms:play-services-ads-identifier:17.0.1'//adjust��Ҫ
+    implementation 'com.google.android.gms:play-services-basement:17.1.1'
+
+    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+
+    //    ------------ applovin start-----------
+    implementation 'com.applovin:applovin-sdk:+'
+    implementation 'com.applovin.mediation:adcolony-adapter:+'
+//    implementation 'com.applovin.mediation:amazon-tam-adapter:+'
+//    implementation 'com.amazon.android:aps-sdk:+'
+    implementation 'com.applovin.mediation:tapjoy-adapter:+'
+//    implementation 'com.applovin.mediation:chartboost-adapter:+' ��Maio û��bidding
+    implementation 'com.google.android.gms:play-services-base:16.1.0'
+    implementation 'com.applovin.mediation:google-adapter:+'
+    implementation 'com.applovin.mediation:ironsource-adapter:+'
+    implementation 'com.applovin.mediation:facebook-adapter:+'
+    implementation 'com.applovin.mediation:mintegral-adapter:+'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation 'com.applovin.mediation:bytedance-adapter:5.2.0.6.0'
+    implementation 'com.applovin.mediation:unityads-adapter:4.6.1.0'
+    implementation 'com.applovin.mediation:vungle-adapter:+'
+    implementation 'com.mbridge.msdk.oversea:dycreator:+'
+    //    ------------ applovin stop-----------
+    implementation 'com.android.volley:volley:1.1.1'
+    implementation 'com.android.support:recyclerview-v7:28.+'
+    implementation 'com.android.support:appcompat-v7:28.+'
+
+    implementation 'com.tencent.bugly:crashreport:latest.release' //����latest.releaseָ������Bugly SDK�汾�ţ�Ҳ����ָ����ȷ�İ汾�ţ�����2.1.9
+    implementation 'com.tencent.bugly:nativecrashreport:3.6.0.1' //����latest.releaseָ������Bugly NDK�汾�ţ�Ҳ����ָ����ȷ�İ汾�ţ�����3.0
+
+    implementation platform('com.google.firebase:firebase-bom:30.0.0')
+    implementation 'com.google.firebase:firebase-analytics'
+    configurations.all {
+        resolutionStrategy.force 'androidx.core:core:1.6.0'
+    }
+    implementation 'com.google.android.play:core:1.10.0'//Ӧ��������
+    implementation "com.google.android.gms:play-services-games-v2:+"
+    implementation 'com.google.android.gms:play-services-auth:20.3.0'// google play��½
+}
+apply plugin: 'com.google.gms.google-services'  // Google Services plugin

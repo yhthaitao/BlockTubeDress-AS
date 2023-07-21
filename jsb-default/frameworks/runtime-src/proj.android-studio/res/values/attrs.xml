@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="banner_height">50dp</dimen>
+</resources>
+<!--<com.applovin.mediation.ads.MaxAdView-->
+<!--    xmlns:maxads="http://schemas.applovin.com/android/1.0"-->
+<!--    maxads:adUnitId="b8e29acb1c3328b4"-->
+<!--    android:background="@color/banner_background_color" -->
+<!--    android:layout_width="match_parent"               -->
+<!--    android:layout_height="@dimen/banner_height" >-->
+<!--</com.applovin.mediation.ads.MaxAdView>-->

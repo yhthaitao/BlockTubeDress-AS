@@ -1,0 +1,440 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.sort.puzzle.dress"
+    android:installLocation="auto">
+
+    <uses-feature android:glEsVersion="0x00020000" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="com.google.android.gms.permission.AD_ID" />
+
+    <application
+        android:name="org.cocos2dx.javascript.GlobalApplication"
+        android:networkSecurityConfig="@xml/network_security_config"
+        android:allowBackup="true"
+        android:label="@string/app_name"
+        android:usesCleartextTraffic="true"
+        android:icon="@drawable/notification_icon">
+
+        <receiver
+            android:name="com.adjust.sdk.AdjustReferrerReceiver"
+            android:exported="true"
+            android:permission="android.permission.INSTALL_PACKAGES">
+            <intent-filter>
+                <action android:name="com.android.vending.INSTALL_REFERRER" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name="com.universal.notification.AlarmReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="TIMER_ACTION" />
+            </intent-filter>
+        </receiver>
+
+        <activity
+            android:exported="false"
+            android:name="com.facebook.FacebookActivity" />
+        <activity
+            android:exported="false"
+            android:name="com.facebook.CustomTabMainActivity" />
+        <provider
+            android:name="com.facebook.FacebookContentProvider"
+            android:authorities="${applicationId}.com.facebook.app.FacebookContentProvider333663604937509"
+            android:exported="true" />
+
+        <!-- Tell Cocos2dxActivity the name of our .so -->
+        <meta-data
+            android:name="android.app.lib_name"
+            android:value="cocos2djs" />
+
+        <activity
+            android:name="org.cocos2dx.javascript.AppActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|keyboardHidden|screenSize|screenLayout"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:launchMode="singleTask"
+            android:exported="true"
+            android:taskAffinity="com.sort.puzzle.dress.task01" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:taskAffinity="com.sort.puzzle.dress.task01"
+            android:name="com.ironsource.sdk.controller.ControllerActivity"
+            android:configChanges="orientation|screenSize"
+            android:exported="false"
+            android:hardwareAccelerated="true" />
+        <activity
+            android:taskAffinity="com.sort.puzzle.dress.task01"
+            android:name="com.ironsource.sdk.controller.InterstitialActivity"
+            android:configChanges="orientation|screenSize"
+            android:hardwareAccelerated="true"
+            android:exported="false"
+            android:theme="@android:style/Theme.Translucent" />
+        <activity
+            android:taskAffinity="com.sort.puzzle.dress.task01"
+            android:name="com.ironsource.sdk.controller.OpenUrlActivity"
+            android:configChanges="orientation|screenSize"
+            android:hardwareAccelerated="true"
+            android:exported="false"
+            android:theme="@android:style/Theme.Translucent" />
+        <activity
+            android:taskAffinity="com.sort.puzzle.dress.task01"
+            android:name="com.google.android.gms.ads.AdActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
+            android:exported="false"
+            android:theme="@android:style/Theme.Translucent" />
+        <activity
+            android:taskAffinity="com.sort.puzzle.dress.task01"
+            android:name="com.applovin.adview.AppLovinFullscreenActivity"
+            android:configChanges="keyboard|keyboardHidden|locale|orientation|screenLayout|screenSize|smallestScreenSize|uiMode"
+            android:exported="false"
+            android:hardwareAccelerated="true"
+            android:launchMode="singleTop"
+            android:screenOrientation="behind"
+            tools:replace="android:configChanges" />
+        <activity
+            android:taskAffinity="com.sort.puzzle.dress.task01"
+            android:name="com.applovin.sdk.AppLovinWebViewActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|uiMode"
+            android:exported="false"
+            tools:replace="android:configChanges" />
+        <activity
+            android:taskAffinity="com.sort.puzzle.dress.task01"
+            android:name="com.facebook.ads.AudienceNetworkActivity"
+            android:hardwareAccelerated="true"
+            android:exported="false"
+            android:configChanges="keyboardHidden|orientation|screenSize" />
+        <activity
+            android:taskAffinity="com.sort.puzzle.dress.task01"
+            android:name="com.unity3d.services.ads.adunit.AdUnitActivity"
+            android:configChanges="fontScale|keyboard|keyboardHidden|locale|mnc|mcc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|uiMode|touchscreen"
+            android:hardwareAccelerated="true"
+            android:exported="false"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+        <activity
+            android:taskAffinity="com.sort.puzzle.dress.task01"
+            android:name="com.unity3d.services.ads.adunit.AdUnitTransparentActivity"
+            android:configChanges="fontScale|keyboard|keyboardHidden|locale|mnc|mcc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|uiMode|touchscreen"
+            android:hardwareAccelerated="true"
+            android:exported="false"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" />
+        <activity
+            android:taskAffinity="com.sort.puzzle.dress.task01"
+            android:name="com.unity3d.services.ads.adunit.AdUnitTransparentSoftwareActivity"
+            android:configChanges="fontScale|keyboard|keyboardHidden|locale|mnc|mcc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|uiMode|touchscreen"
+            android:hardwareAccelerated="false"
+            android:exported="false"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" />
+        <activity
+            android:taskAffinity="com.sort.puzzle.dress.task01"
+            android:name="com.unity3d.services.ads.adunit.AdUnitSoftwareActivity"
+            android:configChanges="fontScale|keyboard|keyboardHidden|locale|mnc|mcc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|uiMode|touchscreen"
+            android:hardwareAccelerated="false"
+            android:exported="false"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+        <activity
+            tools:replace="android:theme"
+            android:taskAffinity="com.sort.puzzle.dress.task01"
+            android:name="com.mbridge.msdk.activity.MBCommonActivity"
+            android:configChanges="keyboard|orientation"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+        <!--Activities required for rewarded video and interstitial video ads-->
+        <activity
+            tools:replace="android:theme"
+            android:taskAffinity="com.sort.puzzle.dress.task01"
+            android:name="com.mbridge.msdk.reward.player.MBRewardVideoActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:theme="@style/mbridge_transparent_theme" />
+        <!--Activity required for interstitial image ads-->
+        <activity
+            android:taskAffinity="com.sort.puzzle.dress.task01"
+            android:name="com.mbridge.msdk.interstitial.view.MBInterstitialActivity"
+            android:configChanges="orientation|screenSize"
+            android:exported="false"
+            android:excludeFromRecents="true" />
+
+        <activity
+            android:taskAffinity="com.sort.puzzle.dress.task01"
+            android:name="com.applovin.mediation.MaxDebuggerActivity"
+            android:configChanges="fontScale|keyboard|keyboardHidden|locale|orientation|screenLayout|screenSize|smallestScreenSize|uiMode"
+            android:exported="false"
+            android:theme="@style/com.applovin.mediation.MaxDebuggerActivity.Theme" />
+        <activity
+            android:taskAffinity="com.sort.puzzle.dress.task01"
+            android:name="com.applovin.mediation.MaxDebuggerDetailActivity"
+            android:configChanges="fontScale|keyboard|keyboardHidden|locale|orientation|screenLayout|screenSize|smallestScreenSize|uiMode"
+            android:exported="false"
+            android:theme="@style/com.applovin.mediation.MaxDebuggerActivity.Theme" />
+        <activity
+            android:taskAffinity="com.sort.puzzle.dress.task01"
+            android:name="com.applovin.mediation.MaxDebuggerMultiAdActivity"
+            android:configChanges="fontScale|keyboard|keyboardHidden|locale|orientation|screenLayout|screenSize|smallestScreenSize|uiMode"
+            android:exported="false"
+            android:theme="@style/com.applovin.mediation.MaxDebuggerActivity.Theme" />
+        <activity
+            android:taskAffinity="com.sort.puzzle.dress.task01"
+            android:name="com.applovin.mediation.MaxDebuggerAdUnitsListActivity"
+            android:configChanges="fontScale|keyboard|keyboardHidden|locale|orientation|screenLayout|screenSize|smallestScreenSize|uiMode"
+            android:exported="false"
+            android:theme="@style/com.applovin.mediation.MaxDebuggerActivity.Theme" />
+        <activity
+            android:taskAffinity="com.sort.puzzle.dress.task01"
+            android:name="com.applovin.mediation.MaxDebuggerTestLiveNetworkActivity"
+            android:configChanges="fontScale|keyboard|keyboardHidden|locale|orientation|screenLayout|screenSize|smallestScreenSize|uiMode"
+            android:exported="false"
+            android:theme="@style/com.applovin.mediation.MaxDebuggerActivity.Theme" />
+        <activity
+            android:taskAffinity="com.sort.puzzle.dress.task01"
+            android:name="com.bytedance.sdk.openadsdk.activity.TTLandingPageActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="standard"
+            android:exported="false"
+            android:theme="@style/tt_landing_page" />
+        <activity
+            android:taskAffinity="com.sort.puzzle.dress.task01"
+            android:name="com.bytedance.sdk.openadsdk.activity.TTPlayableLandingPageActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="standard"
+            android:exported="false"
+            android:theme="@style/tt_landing_page" />
+        <activity
+            android:taskAffinity="com.sort.puzzle.dress.task01"
+            android:name="com.bytedance.sdk.openadsdk.activity.TTVideoLandingPageActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="standard"
+            android:exported="false"
+            android:theme="@style/tt_landing_page" />
+        <activity
+            android:taskAffinity="com.sort.puzzle.dress.task01"
+            android:name="com.bytedance.sdk.openadsdk.activity.TTVideoLandingPageLink2Activity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="standard"
+            android:exported="false"
+            android:theme="@style/tt_landing_page" />
+        <activity
+            android:taskAffinity="com.sort.puzzle.dress.task01"
+            android:name="com.bytedance.sdk.openadsdk.activity.TTRewardVideoActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="standard"
+            android:exported="false"
+            android:theme="@style/tt_full_screen_new" />
+        <activity
+            android:taskAffinity="com.sort.puzzle.dress.task01"
+            android:name="com.bytedance.sdk.openadsdk.activity.TTRewardExpressVideoActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="standard"
+            android:exported="false"
+            android:theme="@style/tt_full_screen_new" />
+        <activity
+            android:taskAffinity="com.sort.puzzle.dress.task01"
+            android:name="com.bytedance.sdk.openadsdk.activity.TTFullScreenVideoActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="standard"
+            android:exported="false"
+            android:theme="@style/tt_full_screen_new" />
+        <activity
+            android:taskAffinity="com.sort.puzzle.dress.task01"
+            android:name="com.bytedance.sdk.openadsdk.activity.TTFullScreenExpressVideoActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="standard"
+            android:exported="false"
+            android:theme="@style/tt_full_screen_new" />
+        <activity
+            android:taskAffinity="com.sort.puzzle.dress.task01"
+            android:name="com.bytedance.sdk.openadsdk.activity.TTInterstitialActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="standard"
+            android:exported="false"
+            android:theme="@style/tt_full_screen_interaction" />
+        <activity
+            android:taskAffinity="com.sort.puzzle.dress.task01"
+            android:name="com.bytedance.sdk.openadsdk.activity.TTInterstitialExpressActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="standard"
+            android:exported="false"
+            android:theme="@style/tt_full_screen_interaction" />
+        <activity
+            android:taskAffinity="com.sort.puzzle.dress.task01"
+            android:name="com.bytedance.sdk.openadsdk.activity.TTDelegateActivity"
+            android:launchMode="standard"
+            android:exported="false"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity
+            android:taskAffinity="com.sort.puzzle.dress.task01"
+            android:name="com.bytedance.sdk.openadsdk.activity.TTWebsiteActivity"
+            android:launchMode="standard"
+            android:screenOrientation="portrait"
+            android:exported="false"
+            android:theme="@style/tt_privacy_landing_page" />
+        <activity
+            android:taskAffinity="com.sort.puzzle.dress.task01"
+            android:name="com.bytedance.sdk.openadsdk.activity.TTAppOpenAdActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="standard"
+            android:exported="false"
+            android:theme="@style/tt_app_open_ad_no_animation" />
+
+        <service
+            android:exported="false"
+            android:name="com.bytedance.sdk.openadsdk.multipro.aidl.BinderPoolService" />
+        <activity
+            android:taskAffinity="com.sort.puzzle.dress.task01"
+            android:exported="false"
+            android:name="com.bytedance.sdk.openadsdk.adapter.PangleAdInterstitialActivity" />
+        <activity
+            android:taskAffinity="com.sort.puzzle.dress.task01"
+            android:name="com.vungle.warren.ui.VungleActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
+            android:launchMode="singleTop"
+            android:exported="false"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+
+        <activity
+            android:exported="false"
+            android:name="com.mbridge.msdk.out.LoadingActivity" />
+        <service
+            android:exported="false"
+            android:name="com.bytedance.sdk.openadsdk.multipro.aidl.BinderPoolService" />
+        <activity
+            android:taskAffinity="com.sort.puzzle.dress.task01"
+            android:name="com.adcolony.sdk.AdColonyInterstitialActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="false"
+            android:hardwareAccelerated="true" />
+        <activity
+            android:taskAffinity="com.sort.puzzle.dress.task01"
+            android:name="com.adcolony.sdk.AdColonyAdViewActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="false"
+            android:hardwareAccelerated="true"/>
+        <activity
+            android:taskAffinity="com.sort.puzzle.dress.task01"
+            android:name="com.amazon.aps.ads.activity.ApsInterstitialActivity"
+            android:exported="false"
+            android:configChanges="orientation|screenSize"
+            tools:replace="android:exported"/>
+        <activity
+            android:taskAffinity="com.sort.puzzle.dress.task01"
+            android:name="com.amazon.device.ads.DTBInterstitialActivity"
+            android:exported="false"
+            android:configChanges="orientation|screenSize"
+            tools:replace="android:exported"/>
+        <activity
+            android:taskAffinity="com.sort.puzzle.dress.task01"
+            android:exported="false"
+            android:name="com.amazon.device.ads.DTBAdActivity" />
+        <activity
+            android:taskAffinity="com.sort.puzzle.dress.task01"
+            android:exported="false"
+            android:name="com.tapjoy.TJAdUnitActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:hardwareAccelerated="true"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen"
+            tools:replace="android:theme" />
+        <activity
+            android:taskAffinity="com.sort.puzzle.dress.task01"
+            android:exported="false"
+            android:name="com.tapjoy.TJContentActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:hardwareAccelerated="true"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            tools:replace="android:theme" />
+        <activity
+            android:taskAffinity="com.sort.puzzle.dress.task01"
+            android:exported="false"
+            android:name="com.applovin.mediation.hybridAds.MaxHybridMRecAdActivity"
+            android:configChanges="fontScale|keyboard|keyboardHidden|locale|orientation|screenLayout|screenSize|smallestScreenSize|uiMode" />
+        <activity
+            android:taskAffinity="com.sort.puzzle.dress.task01"
+            android:exported="false"
+            android:name="com.applovin.mediation.hybridAds.MaxHybridNativeAdActivity"
+            android:configChanges="fontScale|keyboard|keyboardHidden|locale|orientation|screenLayout|screenSize|smallestScreenSize|uiMode" />
+
+        <!-- Mediation Debugger Activities -->
+
+        <activity
+            android:taskAffinity="com.sort.puzzle.dress.task01"
+            android:exported="false"
+            android:name="com.applovin.mediation.MaxDebuggerAdUnitDetailActivity"
+            android:configChanges="fontScale|keyboard|keyboardHidden|locale|orientation|screenLayout|screenSize|smallestScreenSize|uiMode"
+            android:theme="@style/com.applovin.mediation.MaxDebuggerActivity.Theme" />
+        <activity
+            android:taskAffinity="com.sort.puzzle.dress.task01"
+            android:exported="false"
+            android:name="com.applovin.mediation.MaxDebuggerTestModeNetworkActivity"
+            android:configChanges="fontScale|keyboard|keyboardHidden|locale|orientation|screenLayout|screenSize|smallestScreenSize|uiMode"
+            android:theme="@style/com.applovin.mediation.MaxDebuggerActivity.Theme" />
+        <activity
+            android:taskAffinity="com.sort.puzzle.dress.task01"
+            android:exported="false"
+            android:name="com.applovin.creative.MaxCreativeDebuggerActivity"
+            android:configChanges="fontScale|keyboard|keyboardHidden|locale|orientation|screenLayout|screenSize|smallestScreenSize|uiMode"
+            android:theme="@style/com.applovin.creative.CreativeDebuggerActivity.Theme" />
+        <activity
+            android:taskAffinity="com.sort.puzzle.dress.task01"
+            android:exported="false"
+            android:name="com.applovin.creative.MaxCreativeDebuggerDisplayedAdActivity"
+            android:configChanges="fontScale|keyboard|keyboardHidden|locale|orientation|screenLayout|screenSize|smallestScreenSize|uiMode"
+            android:theme="@style/com.applovin.creative.CreativeDebuggerActivity.Theme" />
+
+        <provider
+            android:name="com.ironsource.lifecycle.IronsourceLifecycleProvider"
+            android:exported="false"
+            android:authorities="${applicationId}.IronsourceLifecycleProvider" />
+
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            android:exported="false"
+            tools:node="merge" >
+            <meta-data
+                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+                android:value="androidx.startup" />
+            <meta-data
+                android:name="com.unity3d.services.core.configuration.AdsSdkInitializer"
+                android:value="androidx.startup" />
+        </provider>
+
+        <provider
+            android:name="com.ironsource.lifecycle.IronsourceLifecycleProvider"
+            android:exported="false"
+            android:authorities="${applicationId}.IronsourceLifecycleProvider" />
+
+        <meta-data
+            android:name="applovin.sdk.key"
+            android:value="wr45d6-vgJHLXDPmZ7tWUq2TpqeRrzrxr9_GL68cXz12PJgO2gBi4h6bZzQivpN6PMAW3VTCHvJJ17TZbkMgAb" />
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="@string/admob_app_id" />
+        <meta-data
+            android:name="com.google.android.gms.ads.flag.OPTIMIZE_INITIALIZATION"
+            android:value="true"/>
+        <meta-data
+            android:name="com.google.android.gms.ads.flag.OPTIMIZE_AD_LOADING"
+            android:value="true"/>
+        <meta-data android:name="com.google.android.gms.games.APP_ID"
+            android:value="@string/game_services_project_id"/>
+    </application>
+
+</manifest>

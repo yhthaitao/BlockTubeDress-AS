@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name" translatable="false">My Closet-Clothes Sort Puzzle</string>
+    <string name="facebook_app_id">333663604937509</string>
+    <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
+    <string name="default_notification_channel_name" translatable="true">My Closet-Clothes Sort Puzzle</string>
+    <string name="fcm_message">FCM Message</string>
+    <string name="msg_token_fmt" translatable="false">====== InstanceID Token: %s</string>
+    <string name="admob_app_id">ca-app-pub-8225893138914109~4694875863</string>
+    <string translatable="false"  name="game_services_project_id">570781201899</string>
+    <string name="loading_from_cloud">Loading your progress.</string>
+    <string name="format_days_ago">%d days ago</string>
+    <string name="format_hours_ago">%d hours ago</string>
+    <string name="format_minutes_ago">%d minutes ago</string>
+    <string name="format_seconds_ago">%d seconds ago</string>
+    <string name="moments_ago">moments ago</string>
+    <string name="title_load_game">Select saved game to load</string>
+    <string name="show_snapshots_error">There was a problem getting the select snapshot intent!</string>
+    <string name="snapshotimage_description">Saved image for snapshot</string>
+    <string name="status_exception_error">%1$s (status %2$d). %3$s.</string>
+    <string name="error_opening_metadata">There was a problem opening the snapshot metadata!</string>
+    <string name="error_opening_filename">There was a problem opening the current save file!</string>
+    <string name="error_closing_metadata">There was a problem waiting for the snapshot metadata to close!</string>
+    <string name="error_closing_filename">There was a problem waiting for the current save file to close!</string>
+    <string name="prev_world">&lt;</string>
+    <string name="next_world">&gt;</string>
+    <string name="how_many_stars">How many stars do you think you deserve on this level?</string>
+    <string name="sign_in_explanation">Sign to save your progress and keep it synchronized across all your devices."</string>
+    <string name="you_are_signed_in">You are signed in with Google. Your progress will be automatically saved online.</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="please_sign_in">"Please sign-in before playing"</string>
+    <string name="select_conflicted_game">Select which game to load</string>
+</resources>
