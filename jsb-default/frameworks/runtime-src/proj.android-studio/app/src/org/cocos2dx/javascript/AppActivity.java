@@ -115,7 +115,6 @@ import com.google.android.play.core.review.ReviewInfo;
 import com.google.android.play.core.review.ReviewManager;
 import com.google.android.play.core.review.ReviewManagerFactory;
 import com.google.firebase.analytics.FirebaseAnalytics;
-import com.facebook.appevents.AppEventsLogger;
 //applovin
 //push
 import java.util.HashMap;
@@ -312,49 +311,12 @@ public class AppActivity extends Cocos2dxActivity implements MaxAdListener, MaxR
         }
     }
 
-    public void reportInstall(String adid) {
-        // 输出错误到server
-        if (!"".equals(adid)) {
-            RequestQueue queue = Volley.newRequestQueue(app);
-            String url = "https://adjust.clicksplay.com/blockfish/install?os=android&gps_adid=" + adid;
-            javaLog(" java method: reportInstall url：" + url);
-            StringRequest getRequest = new StringRequest(Request.Method.GET, url,
-                    new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            javaLog(" java method: reportInstall.onResponse response：" + response);
-                            // response
-                            try {
-                                File checkFile = new File(app.getFilesDir(), installCheckFile);
-                                FileWriter writer = new FileWriter(checkFile);
-//                                writer.append("1");
-                                writer.append(app.logAdid);
-                                writer.flush();
-                                writer.close();
-                            } catch (IOException error) {
-                                error.printStackTrace();
-                                javaLog(" java method: reportInstall.onResponse error：" + error.toString());
-                            }
-                        }
-                    },
-                    new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            // error
-                            javaLog(" java method: reportInstall.onErrorResponse error：" + error.toString());
-                        }
-                    }
-            );
-            queue.add(getRequest);
-        }
-    }
-
     public void myLogEvent(String adid, String name, String value) {
         // 输出错误到server
         javaLog(" java method: myLogEvent ad：" + adid + "; name: " + name + "; value: " + value);
         if (!"".equals(adid)) {
             RequestQueue queue = Volley.newRequestQueue(app);
-            String url = "https://quizcelebrity.clicksplay.com/blockfish/buyItem?os=android&gps_adid=" + adid + "&event=" + name + "&value=" + value;
+            String url = "https://quizcelebrity.clicksplay.com/sortdress/buyItem?os=android&gps_adid=" + adid + "&event=" + name + "&value=" + value;
             javaLog(" java method: myLogEvent url：" + url);
             StringRequest getRequest = new StringRequest(Request.Method.GET, url,
                     new Response.Listener<String>() {
@@ -406,6 +368,14 @@ public class AppActivity extends Cocos2dxActivity implements MaxAdListener, MaxR
     JSONObject jsonDot;
     private static final String stringDot = "{" +
             "100_Resource_load_success:'oepiqe'," +
+
+            "onCreat_001:'xnbp8j'," +
+            "onCreat_002:'xg1men'," +
+            "onCreat_003:'h26bel'," +
+            "onCreat_004:'payvo2'," +
+            "onCreat_005:'8uka9k'," +
+            "onCreat_006:'b58rwm'," +
+
             "101_Guide_adventure_01:'d1low4'," +
             "102_Guide_adventure_02:'thq0ka'," +
             "103_Guide_adventure_03:'n4cllb'," +
@@ -474,6 +444,7 @@ public class AppActivity extends Cocos2dxActivity implements MaxAdListener, MaxR
     private void initJsonDot() {
         try {
             this.jsonDot = new JSONObject(this.stringDot);
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -804,7 +775,7 @@ public class AppActivity extends Cocos2dxActivity implements MaxAdListener, MaxR
         RequestQueue queue = Volley.newRequestQueue(app);
         javaLog(" java method: collectErr errInfo: " + errInfo);
         if (!errInfo.equals("")) {
-            String url = "https://quizcelebrity.clicksplay.com?game=woodyblock&err=" + encode(errInfo);
+            String url = "https://quizcelebrity.clicksplay.com?game=sortdress&err=" + encode(errInfo);
             javaLog(" java method: collectErr url: " + url);
             StringRequest getRequest = new StringRequest(Request.Method.GET, url,
                     new Response.Listener<String>() {
@@ -1129,13 +1100,10 @@ public class AppActivity extends Cocos2dxActivity implements MaxAdListener, MaxR
     }
 
     public static void facebookLogEvent(String eventName) {
-        javaLog(" java method: facebookLogEvent() Adjust: " + eventName);
-        AppEventsLogger logger = AppEventsLogger.newLogger(app);
-        logger.logEvent(app.fbLogPrefix + eventName);
-
         if (app.jsonDot != null && app.jsonDot.has(eventName)){
             try{
                 String stringEvent = app.jsonDot.getString(eventName);
+                javaLog(" java method: facebookLogEvent() eventName: " + eventName + "; stringEvent: " + stringEvent);
                 AdjustEvent adjustEvent = new AdjustEvent(stringEvent);
                 Adjust.trackEvent(adjustEvent);
             }catch (JSONException e){
@@ -1150,11 +1118,11 @@ public class AppActivity extends Cocos2dxActivity implements MaxAdListener, MaxR
     }
 
     public static void valueLogEvent(String eventName, String value) {
-        javaLog(" java method: valueLogEvent() 参数1: " + eventName + "; 参数2: " + value);
         app.logVersion = app.getPackageVersion();
         if (app.jsonDot != null && app.jsonDot.has(eventName)){
             try{
                 String stringEvent = app.jsonDot.getString(eventName);
+                javaLog(" java method: valueLogEvent() eventName: " + eventName + "; value: " + value + "; stringEvent: " + stringEvent);
                 AdjustEvent adjustEvent = new AdjustEvent(stringEvent);
                 adjustEvent.addCallbackParameter("Value", value);
                 adjustEvent.addCallbackParameter("Version", app.logVersion);
@@ -1181,11 +1149,12 @@ public class AppActivity extends Cocos2dxActivity implements MaxAdListener, MaxR
 //        DatVersion: '1' //字符串  固定1
 //        AdPlace:''//广告在游戏中的播放位置,自定义,能区分开就行
 //        AdType:'Rewarded',//广告类别 Rewarded:视频广告 Interstital:插屏
-        javaLog(" java method: reqLogEvent() 参数1: " + eventName + "; 参数2: " + adPlace + "; 参数3: " + adType);
         app.logVersion = app.getPackageVersion();
         if (app.jsonDot != null && app.jsonDot.has(eventName)){
             try{
                 String stringEvent = app.jsonDot.getString(eventName);
+                javaLog(" java method: reqLogEvent() eventName: " + eventName + "; adPlace: " + adPlace + "; adType: " + adType
+                        + "; stringEvent: " + stringEvent);
                 AdjustEvent adjustEvent = new AdjustEvent(stringEvent);
                 adjustEvent.addCallbackParameter("PlayerUid", app.logAdid);
                 adjustEvent.addCallbackParameter("Debug", app.debugMode);
@@ -1210,12 +1179,13 @@ public class AppActivity extends Cocos2dxActivity implements MaxAdListener, MaxR
     }
 
     public static void passLevelLogEvent(String eventName, String value, String passTime, String passCount) {
-        javaLog(" java method: passLevelLogEvent() 参数1: " + eventName + "; 参数2: " +
-                value + "; 参数3: " + passTime + "; 参数4: " + passCount);
         app.logVersion = app.getPackageVersion();
         if (app.jsonDot != null && app.jsonDot.has(eventName)){
             try{
                 String stringEvent = app.jsonDot.getString(eventName);
+                javaLog(" java method: passLevelLogEvent() eventName: " + eventName + "; value: " +
+                        value + "; passTime: " + passTime + "; passCount: " + passCount
+                        + "; stringEvent: " + stringEvent);
                 AdjustEvent adjustEvent = new AdjustEvent(stringEvent);
                 adjustEvent.addCallbackParameter("Value", value);
                 adjustEvent.addCallbackParameter("passTime", passTime);
@@ -1251,13 +1221,13 @@ public class AppActivity extends Cocos2dxActivity implements MaxAdListener, MaxR
 //        Network:'',            // MaxSdkBase.AdInfo.NetworkName
 //        NetworkPlacement:"",   // MaxSdkBase.AdInfo.NetworkPlacement
 //        AdRevenue:'',            // MaxSdkBase.AdInfo.Revenue
-        javaLog(" java method: AdDoneLogEvent() eventName: " + eventName + "; adPlace_1: " + adPlace + "; AdType_2: " + adType +
-                "; adUnitId_3: " + adUnitId +"; network_4: " + network + "; networkPlacement_5: " + networkPlacement +
-                "; adRevenue_6: " + adRevenue);
         app.logVersion = app.getPackageVersion();
         if (app.jsonDot != null && app.jsonDot.has(eventName)){
             try{
                 String stringEvent = app.jsonDot.getString(eventName);
+                javaLog(" java method: AdDoneLogEvent() eventName: " + eventName + "; adPlace_1: " + adPlace + "; AdType_2: " + adType +
+                        "; adUnitId_3: " + adUnitId +"; network_4: " + network + "; networkPlacement_5: " + networkPlacement +
+                        "; adRevenue_6: " + adRevenue + "; stringEvent: " + stringEvent);
                 AdjustEvent adjustEvent = new AdjustEvent(stringEvent);
                 adjustEvent.addCallbackParameter("PlayerUid", app.logAdid);
                 adjustEvent.addCallbackParameter("Debug", app.debugMode);
@@ -1384,7 +1354,6 @@ public class AppActivity extends Cocos2dxActivity implements MaxAdListener, MaxR
     protected void onDestroy() {
         super.onDestroy();
         javaLog(" java method: onDestroy() showInterAD: " + app.showInterAD);
-        // Workaround in https://stackoverflow.com/questions/16283079/re-launch-of-activity-on-home-button-but-only-the-first-time/16447508
         if (!isTaskRoot()) {
             return;
         }
@@ -1708,63 +1677,63 @@ public class AppActivity extends Cocos2dxActivity implements MaxAdListener, MaxR
     }
 
     public static void cloudLoadStart() {
-        boolean isNetAvailable = app.isNetAvailable(app.getApplicationContext());
-        javaLog(" java method: cloudLoadStart() isNetAvailable: " + isNetAvailable);
-        if (isNetAvailable) {
-            app.loadSnapshot();
-        }
+//        boolean isNetAvailable = app.isNetAvailable(app.getApplicationContext());
+//        javaLog(" java method: cloudLoadStart() isNetAvailable: " + isNetAvailable);
+//        if (isNetAvailable) {
+//            app.loadSnapshot();
+//        }
     }
 
     public static void saveGame(String json) {
-        javaLog(" java method: saveGame() json: " + json);
-        SnapshotsClient snapshotsClient =
-                PlayGames.getSnapshotsClient(app);
-        int conflictResolutionPolicy = SnapshotsClient.RESOLUTION_POLICY_MOST_RECENTLY_MODIFIED;
-        snapshotsClient.open(app.mCurrentSaveName, true, conflictResolutionPolicy)
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        javaLog(" java method: saveGame.snapshotsClient.open.addOnFailureListener error: " + e);
-                    }
-                }).continueWith(new Continuation<SnapshotsClient.DataOrConflict<Snapshot>, byte[]>() {
-            @Override
-            public byte[] then(@NonNull com.google.android.gms.tasks.Task<SnapshotsClient.DataOrConflict<Snapshot>> task)
-                    throws Exception {
-                try {
-                    SnapshotsClient.DataOrConflict<Snapshot> result = task.getResult();
-                    Task<Snapshot> snapshotToWrite = app.processSnapshotOpenResult(result, 0);
-                    if (snapshotToWrite == null) {
-                        // No snapshot available yet; waiting on the user to choose one.
-                        return null;
-                    }
-
-                    Snapshot snapshot = task.getResult().getData();
-                    snapshot.getSnapshotContents().writeBytes(json.getBytes());
-                    SnapshotMetadataChange metadataChange = new SnapshotMetadataChange.Builder()
-//                                    .setCoverImage(app.getScreenShot())
-                            .setDescription("=========saveGame=succ=Modified data at: " + Calendar.getInstance().getTime())
-                            .build();
-                    SnapshotsClient snapshotsClient = PlayGames.getSnapshotsClient(app);
-                    snapshotsClient.commitAndClose(snapshot, metadataChange);
-                } catch (Exception e) {
-                    javaLog(" java method: saveGame.snapshotsClient.open.continueWith error: " + e);
-                }
-                return null;
-            }
-        }).addOnCompleteListener(new OnCompleteListener<byte[]>() {
-            @Override
-            public void onComplete(@NonNull com.google.android.gms.tasks.Task<byte[]> task) {
-                // Dismiss progress dialog and reflect the changes in the UI when complete.
-                // ...
-                if (task.isSuccessful()) {
-                    javaLog(" java method: saveGame.snapshotsClient.open.addOnCompleteListener saveGame complete");
-                } else {
-//                            handleException(task.getException(), getString(R.string.write_snapshot_error));
-                    javaLog(" java method: saveGame.snapshotsClient.open.addOnCompleteListener saveGame fail: " +
-                            task.getException().getMessage());
-                }
-            }
-        });
+//        javaLog(" java method: saveGame() json: " + json);
+//        SnapshotsClient snapshotsClient =
+//                PlayGames.getSnapshotsClient(app);
+//        int conflictResolutionPolicy = SnapshotsClient.RESOLUTION_POLICY_MOST_RECENTLY_MODIFIED;
+//        snapshotsClient.open(app.mCurrentSaveName, true, conflictResolutionPolicy)
+//                .addOnFailureListener(new OnFailureListener() {
+//                    @Override
+//                    public void onFailure(@NonNull Exception e) {
+//                        javaLog(" java method: saveGame.snapshotsClient.open.addOnFailureListener error: " + e);
+//                    }
+//                }).continueWith(new Continuation<SnapshotsClient.DataOrConflict<Snapshot>, byte[]>() {
+//            @Override
+//            public byte[] then(@NonNull com.google.android.gms.tasks.Task<SnapshotsClient.DataOrConflict<Snapshot>> task)
+//                    throws Exception {
+//                try {
+//                    SnapshotsClient.DataOrConflict<Snapshot> result = task.getResult();
+//                    Task<Snapshot> snapshotToWrite = app.processSnapshotOpenResult(result, 0);
+//                    if (snapshotToWrite == null) {
+//                        // No snapshot available yet; waiting on the user to choose one.
+//                        return null;
+//                    }
+//
+//                    Snapshot snapshot = task.getResult().getData();
+//                    snapshot.getSnapshotContents().writeBytes(json.getBytes());
+//                    SnapshotMetadataChange metadataChange = new SnapshotMetadataChange.Builder()
+////                                    .setCoverImage(app.getScreenShot())
+//                            .setDescription("=========saveGame=succ=Modified data at: " + Calendar.getInstance().getTime())
+//                            .build();
+//                    SnapshotsClient snapshotsClient = PlayGames.getSnapshotsClient(app);
+//                    snapshotsClient.commitAndClose(snapshot, metadataChange);
+//                } catch (Exception e) {
+//                    javaLog(" java method: saveGame.snapshotsClient.open.continueWith error: " + e);
+//                }
+//                return null;
+//            }
+//        }).addOnCompleteListener(new OnCompleteListener<byte[]>() {
+//            @Override
+//            public void onComplete(@NonNull com.google.android.gms.tasks.Task<byte[]> task) {
+//                // Dismiss progress dialog and reflect the changes in the UI when complete.
+//                // ...
+//                if (task.isSuccessful()) {
+//                    javaLog(" java method: saveGame.snapshotsClient.open.addOnCompleteListener saveGame complete");
+//                } else {
+////                            handleException(task.getException(), getString(R.string.write_snapshot_error));
+//                    javaLog(" java method: saveGame.snapshotsClient.open.addOnCompleteListener saveGame fail: " +
+//                            task.getException().getMessage());
+//                }
+//            }
+//        });
     }
 
     private void signInSilently() {

@@ -31,7 +31,7 @@ public class GlobalApplication extends Application{
     public void onCreate() {
         super.onCreate();
         app = this;
-        CrashReport.initCrashReport(getApplicationContext(), "0491f23542", false);
+        CrashReport.initCrashReport(getApplicationContext(), "2cb98115cd", false);
 //        if (LeakCanary.isInAnalyzerProcess(this)) {
 //            // This process is dedicated to LeakCanary for heap analysis.
 //            // You should not init your app in this process.

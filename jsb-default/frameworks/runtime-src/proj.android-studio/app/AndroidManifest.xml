@@ -36,17 +36,6 @@
             </intent-filter>
         </receiver>
 
-        <activity
-            android:exported="false"
-            android:name="com.facebook.FacebookActivity" />
-        <activity
-            android:exported="false"
-            android:name="com.facebook.CustomTabMainActivity" />
-        <provider
-            android:name="com.facebook.FacebookContentProvider"
-            android:authorities="${applicationId}.com.facebook.app.FacebookContentProvider333663604937509"
-            android:exported="true" />
-
         <!-- Tell Cocos2dxActivity the name of our .so -->
         <meta-data
             android:name="android.app.lib_name"
@@ -108,12 +97,6 @@
             android:configChanges="keyboardHidden|orientation|screenSize|uiMode"
             android:exported="false"
             tools:replace="android:configChanges" />
-        <activity
-            android:taskAffinity="com.sort.puzzle.dress.task01"
-            android:name="com.facebook.ads.AudienceNetworkActivity"
-            android:hardwareAccelerated="true"
-            android:exported="false"
-            android:configChanges="keyboardHidden|orientation|screenSize" />
         <activity
             android:taskAffinity="com.sort.puzzle.dress.task01"
             android:name="com.unity3d.services.ads.adunit.AdUnitActivity"
@@ -421,9 +404,6 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-        <meta-data
-            android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id" />
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="@string/admob_app_id" />
