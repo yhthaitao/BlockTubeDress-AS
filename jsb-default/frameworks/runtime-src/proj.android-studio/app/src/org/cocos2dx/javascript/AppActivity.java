@@ -430,6 +430,14 @@ public class AppActivity extends Cocos2dxActivity implements MaxAdListener, MaxR
             "cloudDataShow:'5gfbcf'," +
             "excludeLowEcpm:'j3oq5b'," +
             "levelPass:'qm62pf'," +
+
+            "JigLevelStart:'vevwk8'," +
+            "JigReStart:'cq7odd'," +
+            "JigHelpSucc:'mwwzup'," +
+            "JigLevelPass:'xwq06b'," +
+            "JigReturn:'memlw5'," +
+            "JigLevelOver:'dfnyey'," +
+
             "hammer_click:'gs7cxu'," +
             "hammer_consume:'ex0v2u'," +
             "levelStart:'p12dfs'," +
